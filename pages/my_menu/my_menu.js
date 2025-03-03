@@ -1,206 +1,5 @@
 //固定常量
 const PAGE_SIZE = 5;
-const OEG_DATA = [{
-    "id": 1,
-    "type": "主食",
-    "name": "米饭"
-  },
-  {
-    "id": 2,
-    "type": "主食",
-    "name": "面条"
-  },
-  {
-    "id": 3,
-    "type": "主食",
-    "name": "包子"
-  },
-  {
-    "id": 4,
-    "type": "主食",
-    "name": "饺子"
-  },
-  {
-    "id": 5,
-    "type": "主食",
-    "name": "馒头"
-  },
-  {
-    "id": 6,
-    "type": "主食",
-    "name": "炒饭"
-  },
-  {
-    "id": 7,
-    "type": "主食",
-    "name": "粥"
-  },
-  {
-    "id": 8,
-    "type": "主食",
-    "name": "花卷"
-  },
-  {
-    "id": 9,
-    "type": "主食",
-    "name": "炸酱面"
-  },
-  {
-    "id": 10,
-    "type": "主食",
-    "name": "油条"
-  },
-  {
-    "id": 11,
-    "type": "肉菜",
-    "name": "红烧肉"
-  },
-  {
-    "id": 12,
-    "type": "肉菜",
-    "name": "宫保鸡丁"
-  },
-  {
-    "id": 13,
-    "type": "肉菜",
-    "name": "鱼香肉丝"
-  },
-  {
-    "id": 14,
-    "type": "肉菜",
-    "name": "清蒸鲈鱼"
-  },
-  {
-    "id": 15,
-    "type": "肉菜",
-    "name": "麻辣小龙虾"
-  },
-  {
-    "id": 16,
-    "type": "肉菜",
-    "name": "牛肉炖土豆"
-  },
-  {
-    "id": 17,
-    "type": "肉菜",
-    "name": "羊肉串"
-  },
-  {
-    "id": 18,
-    "type": "肉菜",
-    "name": "烤鸭"
-  },
-  {
-    "id": 19,
-    "type": "肉菜",
-    "name": "炸鸡翅"
-  },
-  {
-    "id": 20,
-    "type": "肉菜",
-    "name": "卤肉饭"
-  },
-  {
-    "id": 21,
-    "type": "素菜",
-    "name": "麻辣豆腐"
-  },
-  {
-    "id": 22,
-    "type": "素菜",
-    "name": "清炒时蔬"
-  },
-  {
-    "id": 23,
-    "type": "素菜",
-    "name": "蒜蓉西兰花"
-  },
-  {
-    "id": 24,
-    "type": "素菜",
-    "name": "地三鲜"
-  },
-  {
-    "id": 25,
-    "type": "素菜",
-    "name": "炒土豆丝"
-  },
-  {
-    "id": 26,
-    "type": "素菜",
-    "name": "蚝油生菜"
-  },
-  {
-    "id": 27,
-    "type": "素菜",
-    "name": "凉拌黄瓜"
-  },
-  {
-    "id": 28,
-    "type": "素菜",
-    "name": "红烧茄子"
-  },
-  {
-    "id": 29,
-    "type": "素菜",
-    "name": "香菇炒青菜"
-  },
-  {
-    "id": 30,
-    "type": "素菜",
-    "name": "素炒豆腐"
-  },
-  {
-    "id": 31,
-    "type": "水果",
-    "name": "苹果"
-  },
-  {
-    "id": 32,
-    "type": "水果",
-    "name": "香蕉"
-  },
-  {
-    "id": 33,
-    "type": "水果",
-    "name": "橙子"
-  },
-  {
-    "id": 34,
-    "type": "水果",
-    "name": "葡萄"
-  },
-  {
-    "id": 35,
-    "type": "水果",
-    "name": "西瓜"
-  },
-  {
-    "id": 36,
-    "type": "水果",
-    "name": "草莓"
-  },
-  {
-    "id": 37,
-    "type": "水果",
-    "name": "蓝莓"
-  },
-  {
-    "id": 38,
-    "type": "水果",
-    "name": "菠萝"
-  },
-  {
-    "id": 39,
-    "type": "水果",
-    "name": "芒果"
-  },
-  {
-    "id": 40,
-    "type": "水果",
-    "name": "猕猴桃"
-  }
-];
 
 //数据库连接
 const db = wx.cloud.database();
@@ -330,11 +129,6 @@ Page({
       modalInputName: "",
       editingItemId: null,
     })
-
-    //2.TODO 模拟数据库新增数据
-
-    //3.更新当前页数据
-    this.updatePageData();
   },
 
   // 编辑按钮点击事件
@@ -342,7 +136,7 @@ Page({
 
     //1.获取编辑项
     const id = e.currentTarget.dataset.id;
-    const item = this.data.pageData.find(item => item.id === id);
+    const item = this.data.pageData.find(item => item._id === id);
 
     //2.显示模态框，并回显数据
     this.setData({
@@ -350,13 +144,8 @@ Page({
       isEditing: true,
       modalSelectedItem: item.type,
       modalInputName: item.name,
-      editingItemId: id,
+      editingItemId: item._id,
     })
-
-    //3.TODO 模拟数据库更新数据
-
-    //4.更新当前页数据
-    this.updatePageData();
   },
 
   // 删除按钮点击事件
@@ -374,7 +163,8 @@ Page({
         //3.如果确认删除
         if (res.confirm) {
 
-          //4.TODO 模拟数据库删除数据
+          //4.数据库删除数据
+          this.removeFoodItem(id);
 
           //5.更新当前页数据
           this.updatePageData();
@@ -464,12 +254,12 @@ Page({
 
     //3.根据不同模式进行不同处理
     if (isEditing) {
-      //4.编辑模式，更新数据 TODO 模拟数据库更新数据
+      this.updateFoodItem(editingItemId, modalInputName, modalSelectedItem)
     } else {
-      //4.录入模式，新增数据 TODO 模拟数据库插入数据
+      this.addFoodItem(modalInputName, modalSelectedItem)
     }
 
-    //5.更新成功，关闭模态框，清空数据
+    //4.更新成功，关闭模态框，清空数据
     this.setData({
       showModal: false,
       isEditing: false,
@@ -478,7 +268,7 @@ Page({
       editingItemId: null,
     });
 
-    //6.更新当前页数据
+    //5.更新当前页数据
     this.updatePageData();
   },
 
@@ -495,10 +285,11 @@ Page({
     });
   },
 
-  //---------------------------数据库函数相关--------------------------//
+  //---------------------------数据库函数相关------------------------//
   // 查询分页数据和总数据数量的函数
   async getPageInfo(pageNum, selectedItem, inputName) {
     try {
+
       //1.创建查询条件
       let queryCondition = {};
 
@@ -521,6 +312,7 @@ Page({
 
       //5.查询分页数据
       const pageRes = await foodCollection.where(queryCondition)
+        .orderBy('updateTime', 'desc')
         .skip((pageNum - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE)
         .get();
@@ -533,6 +325,66 @@ Page({
       };
     } catch (err) {
       console.error('查询失败', err);
+      throw err;
+    }
+  },
+
+  //添加菜单项
+  async addFoodItem(name, type) {
+    try {
+
+      // 1.插入数据
+      const res = await foodCollection.add({
+        data: {
+          name: name,
+          type: type,
+          updateTime: new Date(),
+        },
+      });
+
+      // 2.返回插入结果
+      console.log('插入成功，记录ID：', res._id);
+      return res;
+    } catch (err) {
+      console.error('插入失败', err);
+      throw err;
+    }
+  },
+
+  //修改菜单项
+  async updateFoodItem(id, name, type) {
+    try {
+
+      // 1.修改数据
+      const res = await foodCollection.doc(id).update({
+        data: {
+          name: name,
+          type: type,
+          updateTime: new Date(),
+        },
+      });
+
+      // 2.返回插入结果
+      console.log('更新成功', res);
+      return res;
+    } catch (err) {
+      console.error('更新失败', err);
+      throw err;
+    }
+  },
+
+  //删除菜单项
+  async removeFoodItem(id) {
+    try {
+
+      // 1.修改数据
+      const res = await foodCollection.doc(id).remove();
+
+      // 2.返回插入结果
+      console.log('删除成功', res);
+      return res;
+    } catch (err) {
+      console.error('删除失败', err);
       throw err;
     }
   }

@@ -1,23 +1,7 @@
-//固定常量
-// 主食类型的名称数组
-const MAIN_FOODS = [
-  "米饭", "面条", "包子", "饺子", "馒头", "炒饭", "粥", "花卷", "炸酱面", "油条"
-];
-
-// 肉菜类型的名称数组
-const MEAT_FOODS = [
-  "红烧肉", "宫保鸡丁", "鱼香肉丝", "清蒸鲈鱼", "麻辣小龙虾", "牛肉炖土豆", "羊肉串", "烤鸭", "炸鸡翅", "卤肉饭"
-];
-
-// 素菜类型的名称数组
-const VEGGIE_FOODS = [
-  "麻辣豆腐", "清炒时蔬", "蒜蓉西兰花", "地三鲜", "炒土豆丝", "蚝油生菜", "凉拌黄瓜", "红烧茄子", "香菇炒青菜", "素炒豆腐"
-];
-
-// 水果类型的名称数组
-const FRUITS = [
-  "苹果", "香蕉", "橙子", "葡萄", "西瓜", "草莓", "蓝莓", "菠萝", "芒果", "猕猴桃"
-];
+//数据库连接
+const db = wx.cloud.database();
+const foodCollection = db.collection('foods');
+const dailyMenuCollection = db.collection('daily_menu')
 
 Page({
 
@@ -51,48 +35,59 @@ Page({
     this.updatePageData();
   },
 
-  //初始化食物相关数组
-  initFoods: function () {
+  //钩子函数，其他页面返回index时调用
+  onShow() {
 
-    //------------------------模拟从数据库查询数据--start---------------//
-    //------------------------模拟从数据库查询数据--end-----------------//
+    //1.初始化食物相关数组
+    this.initFoods();
+  },
+
+  //初始化食物相关数组
+  async initFoods() {
+
+    //1.数据库按照类别聚合name
+    const res = await this.getTypes()
 
     //2.设置食物相关数组数据
     this.setData({
-      mainFoods: MAIN_FOODS,
-      meatFoods: MEAT_FOODS,
-      veggieFoods: VEGGIE_FOODS,
-      fruits: FRUITS,
+      mainFoods: res['主食'],
+      meatFoods: res['肉菜'],
+      veggieFoods: res['素菜'],
+      fruits: res['水果']
     });
   },
 
   //---------------------------页面函数相关--------------------------//
   // 更新当前页数据
-  updatePageData: function () {
+  async updatePageData() {
 
     //1.获取今日日期 yyyy-MM-dd
-    const date = this.getCurrentDate()
-    console.log("今日日期:" + date)
+    const today = this.getCurrentDate()
 
-    //------------------------模拟从数据库查询数据--start---------------//
-    //------------------------模拟从数据库查询数据--end--------------//
+    //2.查询今日菜单
+    const todayMenu = await this.getTodayMenu(today)
 
-    //3.检查 pageData 是否为 null 或 undefined，如果是，则初始化它
-    if (this.data.pageData === null || this.data.pageData === undefined) {
+    //3.检查 todayMenu 是否为 null 或 undefined，如果是，则初始化它
+    if (todayMenu.data[0] === null || todayMenu.data[0] === undefined) {
       this.setData({
         pageData: {
-          date: date
+          date: today
         }
       });
 
-      //TODO 模拟数据库中插入数据
+      //4.模拟数据库中插入数据
+      this.addTodayMenu(today)
     } else {
-      //TODO 设置pageData为查询出的数据
+      this.setData({
+        pageData: todayMenu.data[0]
+      });
     }
   },
 
   // 跳转到厨艺发展史页面
   goToCulinaryHistory: function () {
+
+    //1.页面跳转
     wx.navigateTo({
       url: '/pages/culinary_history/culinary_history'
     });
@@ -100,13 +95,15 @@ Page({
 
   // 跳转到我滴菜单页面
   goToMyMenu: function () {
+
+    //1.页面跳转
     wx.navigateTo({
       url: '/pages/my_menu/my_menu'
     });
   },
 
   // 随便吃点按钮点击事件
-  onRandomMeal: function (event) {
+  async onRandomMeal(event) {
 
     //1.获取餐食类型
     const mealType = event.currentTarget.dataset.meal;
@@ -119,16 +116,11 @@ Page({
       fruit: this.getRandomItem(this.data.fruits)
     };
 
-    //3.动态设置餐食类型
-    let pageData = this.data.pageData;
-    pageData[mealType] = randomMeal;
+    //3.数据库更新数据
+    await this.updateTodayMenu(this.getCurrentDate(), mealType, randomMeal)
 
-    //4.TODO 模拟数据库更新数据
-
-    //5.设置当前页数据 TODO 后续调整为更新页面方法即可
-    this.setData({
-      pageData: pageData
-    });
+    //4.更新当前页数据
+    this.updatePageData()
   },
 
   // 私人订制按钮点击事件
@@ -136,7 +128,6 @@ Page({
 
     //1.获取餐食类型
     const mealType = event.currentTarget.dataset.meal;
-    console.log("私人订制点击，餐食类型：" + mealType);
 
     //2.显示模态框
     this.setData({
@@ -199,7 +190,7 @@ Page({
   },
 
   // 确认按钮点击事件
-  onConfirm: function () {
+  async onConfirm() {
 
     //1.获取模态框相关数据
     const {
@@ -219,26 +210,21 @@ Page({
       return;
     }
 
-    //3.获取今日日期 yyyy-MM-dd
-    const date = this.getCurrentDate()
-
-    //4.查询数据 TODO 模拟数据库查询数据
-
-    //5.构造随机餐食
-    const randomMeal = {
+    //3.构造餐食
+    const customMeal = {
       main: main,
       meat: meat,
       veg: veg,
       fruit: fruit
     };
 
-    //6.动态设置餐食类型
-    let pageData = this.data.pageData;
-    pageData[mealType] = randomMeal;
+    //4.数据库更新数据
+    await this.updateTodayMenu(this.getCurrentDate(), mealType, customMeal)
 
-    //7.TODO 模拟数据库更新数据
+    //5.更新当前页数据
+    this.updatePageData()
 
-    //8.更新成功，关闭模态框，清空数据
+    //6.更新成功，关闭模态框，清空数据
     this.setData({
       showModal: false,
       main: "",
@@ -246,11 +232,6 @@ Page({
       veg: "",
       fruit: "",
       mealType: ""
-    });
-
-    //9.设置当前页数据 TODO 后续调整为更新页面方法即可
-    this.setData({
-      pageData: pageData
     });
   },
 
@@ -288,5 +269,117 @@ Page({
   getRandomItem: function (arr) {
     const randomIndex = Math.floor(Math.random() * arr.length);
     return arr[randomIndex];
+  },
+
+  //---------------------------数据库函数相关------------------------//
+  //查询类别集合
+  async getTypes() {
+    try {
+
+      //1.分组查询
+      const _ = db.command.aggregate
+      const res = await foodCollection.aggregate()
+        .sort({
+          updateTime: -1
+        })
+        .group({
+          _id: '$type',
+          names: _.push('$name')
+        })
+        .end();
+
+      //2.聚合返回
+      return res.list.reduce((result, item) => {
+        result[item._id] = item.names;
+        return result;
+      }, {});
+    } catch (err) {
+      console.error('聚合失败', err);
+      throw err;
+    }
+  },
+
+  // 查询今日菜单
+  async getTodayMenu(today) {
+    try {
+
+      //1.创建查询条件
+      let queryCondition = {
+        date: today
+      };
+
+      //2.查询今日菜单
+      const pageRes = await dailyMenuCollection.where(queryCondition)
+        .limit(1)
+        .get();
+      const pageData = pageRes.data;
+
+      //3. 返回结果
+      return {
+        data: pageData,
+      };
+    } catch (err) {
+      console.error('查询失败', err);
+      throw err;
+    }
+  },
+
+  //添加今日菜单
+  async addTodayMenu(today) {
+    try {
+
+      // 1.插入数据
+      const res = await dailyMenuCollection.add({
+        data: {
+          date: today,
+        },
+      });
+
+      // 2.返回插入结果
+      console.log('插入成功，记录ID：', res._id);
+      return res;
+    } catch (err) {
+      console.error('插入失败', err);
+      throw err;
+    }
+  },
+
+  //修改今日菜单
+  async updateTodayMenu(today, type, meal) {
+    try {
+
+      //1.查询是否有日期为 today 的数据
+      const res = await dailyMenuCollection
+        .where({
+          date: today,
+        })
+        .get();
+
+      //2.如果查询到数据，则更新该记录的 type 字段
+      if (res.data.length > 0) {
+
+        //3.获取查询结果中的 id
+        const id = res.data[0]._id;
+
+        //4.动态更新字段，字段名由 type 决定
+        const updateData = {};
+        updateData[type] = meal;
+
+        //5.执行更新操作
+        const updateRes = await dailyMenuCollection.doc(id).update({
+          data: updateData,
+        });
+
+        //6.返回
+        console.log('更新成功', updateRes);
+        return updateRes;
+      } else {
+        console.log('没有找到匹配的日期数据');
+        return null;
+      }
+    } catch (err) {
+      console.error('更新失败', err);
+      throw err;
+    }
   },
 });

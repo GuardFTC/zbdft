@@ -6,7 +6,7 @@
   </page-meta>
 
   <!-- 背景图 -->
-  <image src="/images/culinary_history/cyfzs_bg.png" class="background-image"></image>
+  <image src="/images/culinary_history/cyfzs_bg.jpg" class="background-image"></image>
 
   <!-- 页面容器 -->
   <view class="container">

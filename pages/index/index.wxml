@@ -15,12 +15,12 @@
 
       <!-- 厨艺发展史按钮 -->
       <view class="button-container" bindtap="goToCulinaryHistory">
-        <image class="button-background" src="/icons/cyfzs_button.png" />
+        <image class="button-background" src="/icons/cyfzs_button.jpg" />
       </view>
 
       <!-- 我滴菜单按钮 -->
       <view class="button-container" bindtap="goToMyMenu">
-        <image class="button-background" src="/icons/wdcd_button.png" />
+        <image class="button-background" src="/icons/wdcd_button.jpg" />
       </view>
     </view>
 
@@ -31,7 +31,7 @@
       <view class="card">
 
         <!-- 左侧展示图 -->
-        <image src="/images/index/zf_bg.png" class="card-image"></image>
+        <image src="/images/index/zf_bg.jpg" class="card-image"></image>
 
         <!-- 文本内容 -->
         <view class="card-content">
@@ -57,12 +57,12 @@
 
             <!-- 随便吃点按钮 -->
             <view class="button-container" bindtap="onRandomMeal" data-meal="breakfast">
-              <image class="button-background" src="/icons/sbcd_button.png" />
+              <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
             <view class="button-container" bindtap="onCustomMeal" data-meal="breakfast">
-              <image class="button-background" src="/icons/srdz_button.png" />
+              <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>
         </view>
@@ -72,7 +72,7 @@
       <view class="card">
 
         <!-- 左侧展示图 -->
-        <image src="/images/index/wf_bg.png" class="card-image"></image>
+        <image src="/images/index/wf_bg.jpg" class="card-image"></image>
 
         <!-- 文本内容 -->
         <view class="card-content">
@@ -98,12 +98,12 @@
 
             <!-- 随便吃点按钮 -->
             <view class="button-container" bindtap="onRandomMeal" data-meal="lunch">
-              <image class="button-background" src="/icons/sbcd_button.png" />
+              <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
             <view class="button-container" bindtap="onCustomMeal" data-meal="lunch">
-              <image class="button-background" src="/icons/srdz_button.png" />
+              <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>
         </view>
@@ -113,7 +113,7 @@
       <view class="card">
 
         <!-- 左侧展示图 -->
-        <image src="/images/index/wanf_bg.png" class="card-image"></image>
+        <image src="/images/index/wanf_bg.jpg" class="card-image"></image>
 
         <!-- 文本内容 -->
         <view class="card-content">
@@ -139,12 +139,12 @@
 
             <!-- 随便吃点按钮 -->
             <view class="button-container" bindtap="onRandomMeal" data-meal="dinner">
-              <image class="button-background" src="/icons/sbcd_button.png" />
+              <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
             <view class="button-container" bindtap="onCustomMeal" data-meal="dinner">
-              <image class="button-background" src="/icons/srdz_button.png" />
+              <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>
         </view>

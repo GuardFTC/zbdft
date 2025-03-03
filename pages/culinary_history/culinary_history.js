@@ -107,6 +107,10 @@ const OEG_DATA = [{
   }
 ]
 
+//数据库连接
+const db = wx.cloud.database();
+const dailyMenuCollection = db.collection('daily_menu')
+
 Page({
 
   //数据相关
@@ -126,29 +130,25 @@ Page({
 
   //---------------------------页面函数相关--------------------------//
   // 更新当前页数据
-  updatePageData: function () {
+  async updatePageData() {
 
     //1.定义相关数据
     const {
       pageNum
     } = this.data;
 
-    //------------------------模拟从数据库查询数据--start---------------//
-    //2.获取总页数
-    const totalItems = OEG_DATA.length;
-    const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+    //2.获取分页数据
+    const {
+      total,
+      data
+    } = await this.getPageInfo(pageNum);
 
-    //3.计算分页起止下标
-    const startIndex = (pageNum - 1) * PAGE_SIZE;
-    const endIndex = pageNum * PAGE_SIZE
+    //3.计算总页数
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
-    //4.基于分页截取数据
-    const pageData = OEG_DATA.slice(startIndex, endIndex);
-    //------------------------模拟从数据库查询数据--end--------------//
-
-    //5.设置当前页数据,总页数
+    //4.设置当前页数据,总页数
     this.setData({
-      pageData: pageData,
+      pageData: data,
       totalPages: totalPages,
     });
   },
@@ -185,5 +185,33 @@ Page({
 
     //3.更新当前页数据
     this.updatePageData();
+  },
+
+  //---------------------------数据库函数相关------------------------//
+  // 查询分页数据和总数据数量的函数
+  async getPageInfo(pageNum) {
+    try {
+
+      //1.查询总数据数量
+      const countRes = await dailyMenuCollection.count();
+      const totalCount = countRes.total;
+
+      //2.查询分页数据
+      const pageRes = await dailyMenuCollection
+        .orderBy('date', 'desc')
+        .skip((pageNum - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .get();
+      const pageData = pageRes.data;
+
+      //3. 返回结果
+      return {
+        total: totalCount,
+        data: pageData,
+      };
+    } catch (err) {
+      console.error('查询失败', err);
+      throw err;
+    }
   },
 });

@@ -1,0 +1,220 @@
+/* 页面容器 */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* 填满整个屏幕 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* 防止滚动条出现 */
+}
+
+/* 背景图 */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* 将背景图置于底层 */
+  object-fit: cover;
+  /* 确保图片覆盖整个容器 */
+}
+
+/* 第1个 Card */
+.top-card {
+  position: absolute;
+  top: 180px;
+  /* 增加 top 值，让卡片更下移 */
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* 透明效果 */
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  /* 横向排列按钮 */
+  justify-content: space-between;
+  /* 均匀分布按钮 */
+  gap: 8px;
+  /* 调整按钮之间的间距，稍微减小 */
+  width: 90%;
+  /* 设置宽度为父容器的 90% */
+  max-width: 320px;
+  /* 控制卡片的最大宽度 */
+  margin: 0 auto;
+  /* 让按钮卡片居中 */
+}
+
+/* 按钮容器 */
+.button-container {
+  position: relative;
+  width: 140px;
+  /* 调整按钮的宽度 */
+  height: 40px;
+  /* 按钮高度 */
+  border-radius: 8px;
+  /* 圆角 */
+  overflow: hidden;
+  /* 隐藏多余的部分 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 按钮背景图 */
+.button-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 保证图片覆盖整个按钮 */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* 第2个 Card */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  /* 减少卡片间的间距 */
+  width: 100%;
+  margin-top: 180px;
+  /* 增加卡片列表与按钮卡片的间距 */
+  align-items: center;
+  /* 使卡片列表居中 */
+}
+
+/* 卡片样式 */
+.card {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* 透明效果 */
+  border-radius: 10px;
+  padding: 10px 20px;
+  /* 适当减小卡片的内边距 */
+  width: 85%;
+  /* 适当缩小卡片宽度 */
+  max-width: 300px;
+  /* 设置最大宽度，避免卡片过宽 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  /* 确保卡片在列表中居中 */
+}
+
+/* 卡片左侧图片 */
+.card-image {
+  width: 120px;
+  /* 增大图片宽度 */
+  height: 120px;
+  /* 增大图片高度 */
+  border-radius: 10px;
+  margin-right: 15px;
+}
+
+/* 卡片右侧内容 */
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 20px;
+  /* 增加右侧内容的左边距，拉近右侧文字 */
+  justify-content: flex-end;
+  /* 将内容向下对齐 */
+}
+
+/* 每一行 */
+.card-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  /* 防止文字溢出 */
+}
+
+/* 行内文本 */
+.row-text {
+  font-size: 14px;
+  color: #333333;
+}
+
+/* 模态框容器 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 半透明背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 模态框内部容器 */
+.modal-container {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+}
+
+/* 卡片样式 */
+.modal-card1 {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 100%;
+  gap: 15px; /* 卡片内的元素间距 */
+}
+
+/* 卡片样式 */
+.modal-card2 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+  gap: 15px; /* 卡片内的元素间距 */
+}
+
+/* 下拉框和文本输入框样式 */
+.model-dropdown, .model-text-input {
+  width: 93%;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+/* 确认和取消按钮横向排列 */
+.modal-card .modal-action-button {
+  width: 50%; /* 确保按钮宽度相等 */
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 确认按钮样式 */
+.modal-confirm-button {
+  background-color: #F6E4CE;
+  color: rgb(134, 133, 133);
+  float: left; /* 确保它靠左 */
+}
+
+/* 取消按钮样式 */
+.modal-cancel-button {
+  background-color: #ccc;
+  color: #fff;
+  float: right; /* 确保它靠右 */
+}

@@ -1,0 +1,66 @@
+<view>
+
+  <!-- 导航栏 -->
+  <page-meta>
+    <navigation-bar title="厨艺发展史" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  </page-meta>
+
+  <!-- 背景图 -->
+  <image src="/images/culinary_history/cyfzs_bg.png" class="background-image"></image>
+
+  <!-- 页面容器 -->
+  <view class="container">
+
+    <!-- 第1个 Card：table表格 -->
+    <view class="card-container">
+
+      <!-- 表头 -->
+      <view class="table-header">
+        <view class="table-cell">日期</view>
+        <view class="table-cell">早餐</view>
+        <view class="table-cell">午餐</view>
+        <view class="table-cell">晚餐</view>
+      </view>
+
+      <!-- 动态数据行 -->
+      <block wx:for="{{pageData}}" wx:key="index">
+        <view class="table-row">
+          <view class="table-cell">{{item.date}}</view>
+          <view class="table-cell">
+            <view>{{item.breakfast.main}}</view>
+            <view>{{item.breakfast.meat}}</view>
+            <view>{{item.breakfast.veg}}</view>
+            <view>{{item.breakfast.fruit}}</view>
+          </view>
+          <view class="table-cell">
+            <view>{{item.lunch.main}}</view>
+            <view>{{item.lunch.meat}}</view>
+            <view>{{item.lunch.veg}}</view>
+            <view>{{item.lunch.fruit}}</view>
+          </view>
+          <view class="table-cell">
+            <view>{{item.dinner.main}}</view>
+            <view>{{item.dinner.meat}}</view>
+            <view>{{item.dinner.veg}}</view>
+            <view>{{item.dinner.fruit}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 翻页按钮卡片容器 -->
+    <view class="pagination-card-container">
+      <view class="pagination">
+
+        <!-- 上一页按钮 -->
+        <button bindtap="previousPage" class="pagination-button" disabled="{{pageNum === 1}}">上一页</button>
+
+        <!-- 第几列文案 -->
+        <view class="pagination-number">第 {{pageNum}}/{{totalPages}} 页</view>
+
+        <!-- 下一页按钮 -->
+        <button bindtap="nextPage" class="pagination-button" disabled="{{pageNum === totalPages}}">下一页</button>
+      </view>
+    </view>
+  </view>
+</view>

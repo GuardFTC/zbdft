@@ -1,0 +1,190 @@
+<!-- index.wxml -->
+
+<!-- 导航栏 -->
+<navigation-bar title="张宝的饭堂" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
+<!-- 页面内容 -->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+
+    <!-- 背景图 -->
+    <image src="/images/index/jrcd_bg.jpeg" class="background-image"></image>
+
+    <!-- 第1个 Card：包含厨艺发展史、我滴菜单按钮 -->
+    <view class="top-card">
+
+      <!-- 厨艺发展史按钮 -->
+      <view class="button-container" bindtap="goToCulinaryHistory">
+        <image class="button-background" src="/icons/cyfzs_button.png" />
+      </view>
+
+      <!-- 我滴菜单按钮 -->
+      <view class="button-container" bindtap="goToMyMenu">
+        <image class="button-background" src="/icons/wdcd_button.png" />
+      </view>
+    </view>
+
+    <!-- 第2个 Card：包含早中晚三餐card -->
+    <view class="card-list">
+
+      <!-- 第1个 Card：早饭 -->
+      <view class="card">
+
+        <!-- 左侧展示图 -->
+        <image src="/images/index/zf_bg.png" class="card-image"></image>
+
+        <!-- 文本内容 -->
+        <view class="card-content">
+
+          <!-- 判断是否有早餐数据 -->
+          <block wx:if="{{pageData.breakfast}}">
+            <view class="card-row">
+              <text class="row-text">主食：{{pageData.breakfast.main}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">肉菜：{{pageData.breakfast.meat}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">素菜：{{pageData.breakfast.veg}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">水果：{{pageData.breakfast.fruit}}</text>
+            </view>
+          </block>
+
+          <!-- 如果早餐数据为空，显示按钮 -->
+          <block wx:else>
+
+            <!-- 随便吃点按钮 -->
+            <view class="button-container" bindtap="onRandomMeal" data-meal="breakfast">
+              <image class="button-background" src="/icons/sbcd_button.png" />
+            </view>
+
+            <!-- 私人订制按钮 -->
+            <view class="button-container" bindtap="onCustomMeal" data-meal="breakfast">
+              <image class="button-background" src="/icons/srdz_button.png" />
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 第2个 Card：午饭 -->
+      <view class="card">
+
+        <!-- 左侧展示图 -->
+        <image src="/images/index/wf_bg.png" class="card-image"></image>
+
+        <!-- 文本内容 -->
+        <view class="card-content">
+
+          <!-- 判断是否有午餐数据 -->
+          <block wx:if="{{pageData.lunch}}">
+            <view class="card-row">
+              <text class="row-text">主食：{{pageData.lunch.main}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">肉菜：{{pageData.lunch.meat}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">素菜：{{pageData.lunch.veg}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">水果：{{pageData.lunch.fruit}}</text>
+            </view>
+          </block>
+
+          <!-- 如果午餐数据为空，显示按钮 -->
+          <block wx:else>
+
+            <!-- 随便吃点按钮 -->
+            <view class="button-container" bindtap="onRandomMeal" data-meal="lunch">
+              <image class="button-background" src="/icons/sbcd_button.png" />
+            </view>
+
+            <!-- 私人订制按钮 -->
+            <view class="button-container" bindtap="onCustomMeal" data-meal="lunch">
+              <image class="button-background" src="/icons/srdz_button.png" />
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 第3个 Card：晚饭 -->
+      <view class="card">
+
+        <!-- 左侧展示图 -->
+        <image src="/images/index/wanf_bg.png" class="card-image"></image>
+
+        <!-- 文本内容 -->
+        <view class="card-content">
+
+          <!-- 判断是否有晚餐数据 -->
+          <block wx:if="{{pageData.dinner}}">
+            <view class="card-row">
+              <text class="row-text">主食：{{pageData.dinner.main}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">肉菜：{{pageData.dinner.meat}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">素菜：{{pageData.dinner.veg}}</text>
+            </view>
+            <view class="card-row">
+              <text class="row-text">水果：{{pageData.dinner.fruit}}</text>
+            </view>
+          </block>
+
+          <!-- 如果晚餐数据为空，显示按钮 -->
+          <block wx:else>
+
+            <!-- 随便吃点按钮 -->
+            <view class="button-container" bindtap="onRandomMeal" data-meal="dinner">
+              <image class="button-background" src="/icons/sbcd_button.png" />
+            </view>
+
+            <!-- 私人订制按钮 -->
+            <view class="button-container" bindtap="onCustomMeal" data-meal="dinner">
+              <image class="button-background" src="/icons/srdz_button.png" />
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <!-- 点击私人订制按钮模态框 -->
+    <view class="modal" wx:if="{{showModal}}">
+      <view class="modal-container">
+
+        <!-- 第1个卡片：包含下拉框和文本输入框 -->
+        <view class="modal-card1">
+
+          <!-- 下拉框 -->
+          <picker mode="selector" range="{{mainFoods}}" bindchange="onPickerChangeMain" class="model-dropdown">
+            <view class="dropdown-item">{{main ? '当前选择：' + main : '请选择主食'}}</view>
+          </picker>
+
+          <!-- 下拉框 -->
+          <picker mode="selector" range="{{meatFoods}}" bindchange="onPickerChangeMeat" class="model-dropdown">
+            <view class="dropdown-item">{{meat ? '当前选择：' + meat : '请选择肉菜'}}</view>
+          </picker>
+
+          <!-- 下拉框 -->
+          <picker mode="selector" range="{{veggieFoods}}" bindchange="onPickerChangeVeg" class="model-dropdown">
+            <view class="dropdown-item">{{veg ? '当前选择：' + veg : '请选择素菜'}}</view>
+          </picker>
+
+          <!-- 下拉框 -->
+          <picker mode="selector" range="{{fruits}}" bindchange="onPickerChangeFruit" class="model-dropdown">
+            <view class="dropdown-item">{{fruit ? '当前选择：' + fruit : '请选择水果'}}</view>
+          </picker>
+        </view>
+
+        <!-- 第2个卡片：包含确认和取消按钮 -->
+        <view class="modal-card2">
+          <button class="modal-action-button modal-confirm-button" bindtap="onConfirm">确认</button>
+          <button class="modal-action-button modal-cancel-button" bindtap="onCancel">取消</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

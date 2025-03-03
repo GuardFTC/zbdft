@@ -1,0 +1,179 @@
+/* 页面容器 */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+/* 背景图 */
+.background-image {
+  position: absolute;
+  top: 1;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+
+/* 表格容器 */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  /* 设置卡片容器的宽度 */
+  margin: 0 auto;
+  /* 水平居中 */
+  margin-top: 20px;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* 设置透明背景色 */
+  border-radius: 10px;
+  /* 圆角 */
+  padding: 5px;
+  /* 增加内边距 */
+  overflow: hidden;
+  /* 隐藏溢出 */
+}
+
+/* 表格样式 */
+table {
+  table-layout: fixed;
+  /* 强制表格列宽固定，避免列宽过大 */
+  border-collapse: collapse;
+  /* 合并边框 */
+}
+
+/* 表格头部样式 */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* 背景色透明 */
+  font-weight: bold;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  /* 边框透明 */
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* 表格行 */
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid rgba(177, 171, 171, 0.6);
+  /* 边框透明 */
+  text-align: center;
+  width: 100%;
+}
+
+/* 单元格样式 */
+.table-cell {
+  flex: 1;
+  padding: 5px;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid rgba(177, 171, 171, 0.6);
+  /* 边框透明 */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* 设置透明背景色 */
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* 日期列加宽，比例 3 */
+.table-cell:nth-child(1) {
+  flex: 2;
+  /* 增加日期列的宽度 */
+  justify-content: center;
+}
+
+/* 早餐列、午餐列、晚餐列的宽度，比例 2 */
+.table-cell:nth-child(2),
+.table-cell:nth-child(3),
+.table-cell:nth-child(4) {
+  flex: 3;
+  /* 调整为相等宽度 */
+  text-align: left;
+  align-items: flex-start;
+}
+
+/* 为最后一列去掉右边框 */
+.table-cell:last-child {
+  border-right: none;
+}
+
+/* 奇数行背景色 */
+.table-row:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.6);
+  /* 透明背景 */
+}
+
+/* 偶数行背景色 */
+.table-row:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.6);
+  /* 透明背景 */
+}
+
+/* 翻页按钮样式 */
+.pagination-card-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  /* 和表格卡片宽度一致 */
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+/* 左右按钮样式 */
+.pagination-button {
+  padding: 6px 15px;
+  background-color: #F6E4CE;
+  color: rgb(102, 102, 102);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 禁用按钮的样式 */
+.pagination-button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 页码文本样式 */
+.pagination-number {
+  font-size: 16px;
+  color: rgb(102, 102, 102);
+  font-weight: bold;
+  white-space: nowrap;
+  text-align: center;
+  display: inline-block;
+  width: 80px;
+  border-radius: 5px;
+  padding: 5px 0;
+  margin: 0 10px;
+  font-size: 14px;
+}

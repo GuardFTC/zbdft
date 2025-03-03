@@ -1,0 +1,106 @@
+<view>
+
+  <!-- 导航栏 -->
+  <page-meta>
+    <navigation-bar title="我滴菜单" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+  </page-meta>
+
+  <!-- 背景图 -->
+  <image src="/images/my_menu/wdcd_bg.png" class="background-image"></image>
+
+  <!-- 页面容器 -->
+  <view class="container">
+
+    <!-- 第1个 Card：包含下拉框、文本输入框和查询按钮 -->
+    <view class="card">
+      <view class="card-item">
+
+        <!-- 下拉框 -->
+        <picker mode="selector" range="{{categories}}" bindchange="onPickerChange" class="dropdown">
+          <view class="dropdown-item">{{selectedItem ? '当前选择：' + selectedItem : '请选择类型'}}</view>
+        </picker>
+
+        <!-- 文本输入框 -->
+        <input class="text-input" type="text" placeholder="请输入名称" bindinput="onInputChange" value="{{inputName}}" />
+
+        <!-- 清空按钮 -->
+        <button class="remove-button" bindtap="onRemove">清空</button>
+      </view>
+    </view>
+
+    <!-- 第2个 Card：录入菜单按钮 -->
+    <view class="card">
+      <button class="add-button" bindtap="onAddMenu">录入菜单</button>
+    </view>
+
+    <!-- 第3个 Card：table表格 -->
+    <view class="card-container">
+
+      <!-- 表头（Header） -->
+      <view class="table-header">
+        <view class="table-cell hidden-id" style="display: none;">ID</view>
+        <view class="table-cell">类别</view>
+        <view class="table-cell">名称</view>
+        <view class="table-cell">操作</view>
+      </view>
+
+      <!-- 动态数据行 -->
+      <block wx:for="{{pageData}}" wx:key="index">
+        <view class="table-row">
+
+          <!-- 数据列 -->
+          <view class="table-cell hidden-id" style="display: none;">{{item.id}}</view>
+          <view class="table-cell">{{item.type}}</view>
+          <view class="table-cell">{{item.name}}</view>
+
+          <!-- 操作按钮列 -->
+          <view class="table-cell">
+            <view class="action-buttons">
+              <button class="action-button edit-button" bindtap="editItem" data-id="{{item.id}}">编辑</button>
+              <button class="action-button delete-button" bindtap="deleteItem" data-id="{{item.id}}">删除</button>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 翻页按钮卡片容器 -->
+    <view class="pagination-card-container">
+      <view class="pagination">
+
+        <!-- 上一页按钮 -->
+        <button bindtap="previousPage" class="pagination-button" disabled="{{pageNum === 1}}">上一页</button>
+
+        <!-- 第几列文案 -->
+        <view class="pagination-number">第 {{pageNum}}/{{totalPages}} 页</view>
+
+        <!-- 下一页按钮 -->
+        <button bindtap="nextPage" class="pagination-button" disabled="{{pageNum === totalPages}}">下一页</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 点击编辑/录入按钮模态框 -->
+  <view class="modal" wx:if="{{showModal}}">
+    <view class="modal-container">
+
+      <!-- 第1个卡片：包含下拉框和文本输入框 -->
+      <view class="modal-card1">
+
+          <!-- 下拉框 -->
+          <picker mode="selector" range="{{categories}}" bindchange="onPickerChangeModal" class="model-dropdown">
+            <view class="dropdown-item">{{modalSelectedItem ? '当前选择：' + modalSelectedItem : '请选择类别'}}</view>
+          </picker>
+
+          <!-- 文本输入框 -->
+          <input class="model-text-input" type="text" placeholder="请输入名称" bindinput="onInputChangeModal" value="{{modalInputName}}" />
+      </view>
+
+      <!-- 第2个卡片：包含确认和取消按钮 -->
+      <view class="modal-card2">
+        <button class="modal-action-button modal-confirm-button" bindtap="onConfirm">确认</button>
+        <button class="modal-action-button modal-cancel-button" bindtap="onCancel">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

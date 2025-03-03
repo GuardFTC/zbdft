@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "厨艺发展史",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}

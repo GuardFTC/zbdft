@@ -1,111 +1,5 @@
 //固定常量
 const PAGE_SIZE = 3;
-const OEG_DATA = [{
-    date: "2021-01-01",
-    breakfast: {
-      main: "米饭",
-      meat: "榨菜炒肉",
-      veg: "西红柿炒鸡蛋",
-      fruit: "草莓"
-    },
-    lunch: {
-      main: "米饭",
-      meat: "宫保鸡丁",
-      veg: "青椒炒肉",
-      fruit: "苹果"
-    },
-    dinner: {
-      main: "米饭",
-      meat: "红烧肉",
-      veg: "西兰花炒鸡蛋",
-      fruit: "橙子"
-    }
-  },
-  {
-    date: "2021-01-02",
-    breakfast: {
-      main: "面包",
-      meat: "香肠",
-      veg: "鸡蛋炒西红柿",
-      fruit: "香蕉"
-    },
-    lunch: {
-      main: "面条",
-      meat: "回锅肉",
-      veg: "清炒时蔬",
-      fruit: "葡萄"
-    },
-    dinner: {
-      main: "米饭",
-      meat: "烧鸭",
-      veg: "小炒黄牛肉",
-      fruit: "西瓜"
-    }
-  },
-  {
-    date: "2021-01-03",
-    breakfast: {
-      main: "粥",
-      meat: "大排骨",
-      veg: "黄花菜炒蛋",
-      fruit: "柚子"
-    },
-    lunch: {
-      main: "米饭",
-      meat: "回锅肉",
-      veg: "青菜炒香菇",
-      fruit: "苹果"
-    },
-    dinner: {
-      main: "米饭",
-      meat: "水煮鱼",
-      veg: "炖排骨",
-      fruit: "梨"
-    }
-  },
-  {
-    date: "2021-01-04",
-    breakfast: {
-      main: "煎饼",
-      meat: "炒肝",
-      veg: "大葱拌豆腐",
-      fruit: "柠檬"
-    },
-    lunch: {
-      main: "米饭",
-      meat: "红烧牛肉",
-      veg: "炒茄子",
-      fruit: "草莓"
-    },
-    dinner: {
-      main: "米饭",
-      meat: "黄鱼炒面",
-      veg: "酸辣土豆丝",
-      fruit: "橙子"
-    }
-  },
-  {
-    date: "2021-01-05",
-    breakfast: {
-      main: "豆浆",
-      meat: "油条",
-      veg: "韭菜炒蛋",
-      fruit: "橙子"
-    },
-    lunch: {
-      main: "米饭",
-      meat: "红烧肉",
-      veg: "凉拌苦瓜",
-      fruit: "葡萄"
-    },
-    dinner: {
-      main: "米饭",
-      meat: "鸡胸肉",
-      veg: "番茄炒蛋",
-      fruit: "西瓜"
-    }
-  }
-]
 
 //数据库连接
 const db = wx.cloud.database();
@@ -157,6 +51,7 @@ Page({
 
     //3.计算总页数
     const totalPages = Math.ceil(total / PAGE_SIZE);
+    console.log(totalPages)
 
     //4.设置当前页数据,总页数
     this.setData({
@@ -205,18 +100,23 @@ Page({
     try {
 
       //1.查询总数据数量
-      const countRes = await dailyMenuCollection.count();
+      const countRes = await dailyMenuCollection.where({
+          _openid: wx.getStorageSync('openId'),
+        })
+        .count();
       const totalCount = countRes.total;
 
       //2.查询分页数据
-      const pageRes = await dailyMenuCollection
+      const pageRes = await dailyMenuCollection.where({
+          _openid: wx.getStorageSync('openId'),
+        })
         .orderBy('date', 'desc')
         .skip((pageNum - 1) * PAGE_SIZE)
         .limit(PAGE_SIZE)
         .get();
       const pageData = pageRes.data;
 
-      //3. 返回结果
+      //3.返回结果
       return {
         total: totalCount,
         data: pageData,

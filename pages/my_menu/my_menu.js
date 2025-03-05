@@ -302,6 +302,7 @@ Page({
 
       //1.创建查询条件
       let queryCondition = {};
+      queryCondition._openid = wx.getStorageSync('openId')
 
       //2.如果 selectedItem 有值，添加精确匹配条件
       if (selectedItem) {
@@ -312,7 +313,7 @@ Page({
       if (inputName) {
         queryCondition.name = db.RegExp({
           regexp: inputName,
-          options: 'i',
+          options: '',
         });
       }
 

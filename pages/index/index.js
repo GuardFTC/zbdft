@@ -26,22 +26,35 @@ Page({
     //导航栏相关数据
     statusBarHeight: 0, // 状态栏高度
     navigationBarHeight: 44, // 导航栏默认高度（单位：px）
+
+    //个人信息相关
+    openId: ""
   },
 
   //---------------------------钩子函数相关--------------------------//
   //钩子函数，页面初始化时调用
   onLoad: function () {
 
-    //1.初始化食物相关数组
+    //1.获取openId
+    wx.cloud.callFunction({
+        name: 'getOpenId',
+        success: function (res) {
+          const openId = res.result.openid;
+          wx.setStorageSync('openId', openId);
+        },
+        fail: console.error
+      }),
+
+    //2.初始化食物相关数组
     this.initFoods();
 
-    //2.更新当前页数据
+    //3.更新当前页数据
     this.updatePageData();
 
-    //3.获取导航栏高度
+    //4.获取导航栏高度
     const windowInfo = wx.getWindowInfo();
     this.setData({
-      statusBarHeight: windowInfo.statusBarHeight, // 获取状态栏高度
+      statusBarHeight: windowInfo.statusBarHeight,
     });
   },
 
@@ -70,27 +83,35 @@ Page({
   //---------------------------页面函数相关--------------------------//
   // 更新当前页数据
   async updatePageData() {
+    try {
 
-    //1.获取今日日期 yyyy-MM-dd
-    const today = this.getCurrentDate()
+      // 1.获取今日日期 yyyy-MM-dd
+      const today = this.getCurrentDate();
+  
+      // 2.查询今日菜单
+      const todayMenu = await this.getTodayMenu(today);
+  
+      // 3.检查 todayMenu.data 是否存在且不为空
+      if (!todayMenu.data || todayMenu.data.length === 0) {
 
-    //2.查询今日菜单
-    const todayMenu = await this.getTodayMenu(today)
+        //4.如果 todayMenu.data 为空，初始化 pageData
+        this.setData({
+          pageData: {
+            date: today
+          }
+        });
+  
+        //5.模拟数据库中插入数据
+        await this.addTodayMenu(today); // 假设 addTodayMenu 是异步方法
+      } else {
 
-    //3.检查 todayMenu 是否为 null 或 undefined，如果是，则初始化它
-    if (todayMenu.data[0] === null || todayMenu.data[0] === undefined) {
-      this.setData({
-        pageData: {
-          date: today
-        }
-      });
-
-      //4.模拟数据库中插入数据
-      this.addTodayMenu(today)
-    } else {
-      this.setData({
-        pageData: todayMenu.data[0]
-      });
+        //4.如果 todayMenu.data 不为空，更新 pageData
+        this.setData({
+          pageData: todayMenu.data[0]
+        });
+      }
+    } catch (error) {
+      console.error('更新页面数据失败:', error);
     }
   },
 
@@ -293,14 +314,17 @@ Page({
           updateTime: -1
         })
         .group({
-          _id: '$type',
+          _id: {
+            openid: '$_openid',
+            type: '$type'
+          },
           names: _.push('$name')
         })
         .end();
 
       //2.聚合返回
       return res.list.reduce((result, item) => {
-        result[item._id] = item.names;
+        result[item._id.type] = item.names;
         return result;
       }, {});
     } catch (err) {
@@ -315,6 +339,7 @@ Page({
 
       //1.创建查询条件
       let queryCondition = {
+        _openid: wx.getStorageSync('openId'),
         date: today
       };
 

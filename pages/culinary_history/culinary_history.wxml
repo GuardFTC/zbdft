@@ -2,7 +2,9 @@
 
   <!-- 导航栏 -->
   <page-meta>
-    <navigation-bar title="厨艺发展史" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+    <view class="navigation-bar" style="padding-top: {{statusBarHeight}}px; height: {{navigationBarHeight + statusBarHeight}}px;">
+      <view class="title">厨艺发展史</view>
+    </view>
   </page-meta>
 
   <!-- 背景图 -->

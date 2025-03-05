@@ -115,9 +115,15 @@ Page({
 
   //数据相关
   data: {
+
+    //页面数据相关
     pageData: [], // 当前页的数据
     totalPages: 0, // 总页数
     pageNum: 1, // 当前页
+
+    //导航栏相关数据
+    statusBarHeight: 0, // 状态栏高度
+    navigationBarHeight: 44, // 导航栏默认高度（单位：px）
   },
 
   //---------------------------钩子函数相关--------------------------//
@@ -126,6 +132,12 @@ Page({
 
     //1.更新当前页数据
     this.updatePageData();
+
+    //2.获取导航栏高度
+    const windowInfo = wx.getWindowInfo();
+    this.setData({
+      statusBarHeight: windowInfo.statusBarHeight, // 获取状态栏高度
+    });
   },
 
   //---------------------------页面函数相关--------------------------//

@@ -1,7 +1,9 @@
 <!-- index.wxml -->
 
 <!-- 导航栏 -->
-<navigation-bar title="张宝的饭堂" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<view class="navigation-bar" style="padding-top: {{statusBarHeight}}px; height: {{navigationBarHeight + statusBarHeight}}px;">
+  <view class="title">张宝的饭堂</view>
+</view>
 
 <!-- 页面内容 -->
 <scroll-view class="scrollarea" scroll-y type="list">

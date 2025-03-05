@@ -2,7 +2,9 @@
 
   <!-- 导航栏 -->
   <page-meta>
-    <navigation-bar title="我滴菜单" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+    <view class="navigation-bar" style="padding-top: {{statusBarHeight}}px; height: {{navigationBarHeight + statusBarHeight}}px;">
+      <view class="title">我滴菜单</view>
+    </view>
   </page-meta>
 
   <!-- 背景图 -->
@@ -87,13 +89,13 @@
       <!-- 第1个卡片：包含下拉框和文本输入框 -->
       <view class="modal-card1">
 
-          <!-- 下拉框 -->
-          <picker mode="selector" range="{{categories}}" bindchange="onPickerChangeModal" class="model-dropdown">
-            <view class="dropdown-item">{{modalSelectedItem ? '当前选择：' + modalSelectedItem : '请选择类别'}}</view>
-          </picker>
+        <!-- 下拉框 -->
+        <picker mode="selector" range="{{categories}}" bindchange="onPickerChangeModal" class="model-dropdown">
+          <view class="dropdown-item">{{modalSelectedItem ? '当前选择：' + modalSelectedItem : '请选择类别'}}</view>
+        </picker>
 
-          <!-- 文本输入框 -->
-          <input class="model-text-input" type="text" placeholder="请输入名称" bindinput="onInputChangeModal" value="{{modalInputName}}" />
+        <!-- 文本输入框 -->
+        <input class="model-text-input" type="text" placeholder="请输入名称" bindinput="onInputChangeModal" value="{{modalInputName}}" />
       </view>
 
       <!-- 第2个卡片：包含确认和取消按钮 -->

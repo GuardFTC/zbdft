@@ -1,3 +1,20 @@
+/* 导航栏容器 */
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #FFF;
+  color: black;
+  box-sizing: border-box; /* 确保 padding 不影响总高度 */
+}
+
+/* 标题样式 */
+.navigation-bar .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 /**app.wxss**/
 .container {
   height: 100%;

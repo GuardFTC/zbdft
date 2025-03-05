@@ -21,7 +21,11 @@ Page({
     meat: "",
     veg: "",
     fruit: "",
-    mealType: ""
+    mealType: "",
+
+    //导航栏相关数据
+    statusBarHeight: 0, // 状态栏高度
+    navigationBarHeight: 44, // 导航栏默认高度（单位：px）
   },
 
   //---------------------------钩子函数相关--------------------------//
@@ -33,6 +37,12 @@ Page({
 
     //2.更新当前页数据
     this.updatePageData();
+
+    //3.获取导航栏高度
+    const windowInfo = wx.getWindowInfo();
+    this.setData({
+      statusBarHeight: windowInfo.statusBarHeight, // 获取状态栏高度
+    });
   },
 
   //钩子函数，其他页面返回index时调用

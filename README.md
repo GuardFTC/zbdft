@@ -22,8 +22,8 @@ FTC基于AI全栈开发的首款小程序，专为解决张女士“今天吃什
 ## 功能介绍
 
 - **今日菜单**：为你推荐早、中、晚三餐的搭配，解决“吃啥”的烦恼
-    - **随便吃点**：随机从菜单中挑选菜品，搭配出今日饮食，懒人必备！
-    - **私人订制**：张女士亲自决定今日菜单，随心所欲，想吃啥就吃啥
+  - **随便吃点**：随机从菜单中挑选菜品，搭配出今日饮食，懒人必备！
+  - **私人订制**：张女士亲自决定今日菜单，随心所欲，想吃啥就吃啥
 - **厨艺发展史**：记录每日菜单，方便张女士回顾自己的“厨神进化之路”，看看曾经创造了哪些神仙美味
 - **我滴菜单**：分类记录张女士的拿手好菜，涵盖主食、肉菜、素菜、水果四大类，随时查阅，灵感不枯竭
 
@@ -31,7 +31,7 @@ FTC基于AI全栈开发的首款小程序，专为解决张女士“今天吃什
 
 ## 安装与配置
 
-微信小程序搜索 **“张宝今天吃点嘛”** 即可使用
+微信小程序搜索 **“今天吃啥去”** 即可使用
 （PS：“张宝的饭堂”微信公众号就是不给审核通过！！！）
 
 ---
@@ -43,7 +43,7 @@ FTC基于AI全栈开发的首款小程序，专为解决张女士“今天吃什
 ### UI绘图
 
 1. **通义万相**：[https://tongyi.aliyun.com/wanxiang](https://tongyi.aliyun.com/wanxiang)
-   （阿里啊阿里，你的工具真的有点难用，但勉强还是帮上忙了！）
+   （阿里啊，我说实话产品一般，但勉强还是帮上忙了！）
 2. **即梦**：[https://jimeng.jianying.com/ai-tool](https://jimeng.jianying.com/ai-tool)
    （即梦的表现还不错，值得推荐！）
 
@@ -55,6 +55,10 @@ FTC基于AI全栈开发的首款小程序，专为解决张女士“今天吃什
    （文案和代码的灵感源泉，YYDS！）
 3. **DeepSeek**：[https://chat.deepseek.com/](https://chat.deepseek.com/)
    （深度思考的好帮手，感谢支持！）
+
+### 小程序截图
+
+<img title="" src="https://cdn.nlark.com/yuque/0/2025/png/28218714/1741159917083-d48f4797-a926-4898-b148-421d16d9e4d1.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_768%2Climit_0" alt="2025-03-![2025-03-05-15-24-52-image.png](https://cdn.nlark.com/yuque/0/2025/png/28218714/1741159917269-d58d006f-5ace-4a2c-92cc-1bcbf8426b28.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_764%2Climit_0)05-15-23-23-image.png" width="202"><img title="" src="https://cdn.nlark.com/yuque/0/2025/png/28218714/1741159917269-d58d006f-5ace-4a2c-92cc-1bcbf8426b28.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_764%2Climit_0" alt="2025-03-05-15-24-52-image.png" width="207"><img title="" src="https://cdn.nlark.com/yuque/0/2025/png/28218714/1741159917162-7bd9d324-4c75-4017-be05-26c3dc25050d.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_770%2Climit_0" alt="2025-03-05-15-25-52-image.png" width="206">
 
 ---
 

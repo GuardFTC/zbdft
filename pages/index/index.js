@@ -45,8 +45,8 @@ Page({
         fail: console.error
       }),
 
-    //2.初始化食物相关数组
-    this.initFoods();
+      //2.初始化食物相关数组
+      this.initFoods();
 
     //3.更新当前页数据
     this.updatePageData();
@@ -87,10 +87,10 @@ Page({
 
       // 1.获取今日日期 yyyy-MM-dd
       const today = this.getCurrentDate();
-  
+
       // 2.查询今日菜单
       const todayMenu = await this.getTodayMenu(today);
-  
+
       // 3.检查 todayMenu.data 是否存在且不为空
       if (!todayMenu.data || todayMenu.data.length === 0) {
 
@@ -100,7 +100,7 @@ Page({
             date: today
           }
         });
-  
+
         //5.模拟数据库中插入数据
         await this.addTodayMenu(today); // 假设 addTodayMenu 是异步方法
       } else {
@@ -322,9 +322,14 @@ Page({
         })
         .end();
 
-      //2.聚合返回
+      //2.获取openid
+      const openid = wx.getStorageSync('openId')
+
+      //3.聚合返回
       return res.list.reduce((result, item) => {
-        result[item._id.type] = item.names;
+        if (item._id.openid === openid) { 
+          result[item._id.type] = item.names; 
+        }
         return result;
       }, {});
     } catch (err) {
@@ -386,6 +391,7 @@ Page({
       //1.查询是否有日期为 today 的数据
       const res = await dailyMenuCollection
         .where({
+          _openid: wx.getStorageSync('openId'),
           date: today,
         })
         .get();

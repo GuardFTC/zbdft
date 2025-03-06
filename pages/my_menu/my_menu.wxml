@@ -47,23 +47,25 @@
       </view>
 
       <!-- 动态数据行 -->
-      <block wx:for="{{pageData}}" wx:key="index">
-        <view class="table-row">
+      <view class="table-body">
+        <block wx:for="{{pageData}}" wx:key="index">
+          <view class="table-row">
 
-          <!-- 数据列 -->
-          <view class="table-cell hidden-id" style="display: none;">{{item._id}}</view>
-          <view class="table-cell">{{item.type}}</view>
-          <view class="table-cell">{{item.name}}</view>
+            <!-- 数据列 -->
+            <view class="table-cell hidden-id" style="display: none;">{{item._id}}</view>
+            <view class="table-cell">{{item.type}}</view>
+            <view class="table-cell">{{item.name}}</view>
 
-          <!-- 操作按钮列 -->
-          <view class="table-cell">
-            <view class="action-buttons">
-              <button class="action-button edit-button" bindtap="editItem" data-id="{{item._id}}">编辑</button>
-              <button class="action-button delete-button" bindtap="deleteItem" data-id="{{item._id}}">删除</button>
+            <!-- 操作按钮列 -->
+            <view class="table-cell">
+              <view class="action-buttons">
+                <button class="action-button edit-button" bindtap="editItem" data-id="{{item._id}}">编辑</button>
+                <button class="action-button delete-button" bindtap="deleteItem" data-id="{{item._id}}">删除</button>
+              </view>
             </view>
           </view>
-        </view>
-      </block>
+        </block>
+      </view>
     </view>
 
     <!-- 翻页按钮卡片容器 -->

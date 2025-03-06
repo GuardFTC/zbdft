@@ -26,42 +26,35 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-  /* 设置卡片容器的宽度 */
   margin: 0 auto;
-  /* 水平居中 */
   margin-top: 20px;
-  justify-content: center;
   background-color: rgba(255, 255, 255, 0.6);
-  /* 设置透明背景色 */
   border-radius: 10px;
-  /* 圆角 */
   padding: 5px;
-  /* 增加内边距 */
-  overflow: hidden;
-  /* 隐藏溢出 */
+  max-height: 400px; /* 限制容器高度，确保内容区域可以滚动 */
+  overflow: hidden; /* 隐藏外部溢出 */
 }
 
-/* 表格样式 */
-table {
-  table-layout: fixed;
-  /* 强制表格列宽固定，避免列宽过大 */
-  border-collapse: collapse;
-  /* 合并边框 */
-}
-
-/* 表格头部样式 */
+/* 表头 */
 .table-header {
   display: flex;
   justify-content: space-between;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.6);
-  /* 背景色透明 */
   font-weight: bold;
   border-bottom: 2px solid rgba(255, 255, 255, 0.6);
-  /* 边框透明 */
   text-align: center;
   width: 100%;
   font-size: 14px;
+  position: sticky;
+  top: 0; /* 表头固定在顶部 */
+  z-index: 100; /* 确保表头在内容之上 */
+}
+
+/* 表格内容区域 */
+.table-body {
+  overflow-y: auto; /* 内容区域可滚动 */
+  flex-grow: 1; /* 填充剩余空间 */
 }
 
 /* 表格行 */
@@ -70,7 +63,6 @@ table {
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid rgba(177, 171, 171, 0.6);
-  /* 边框透明 */
   text-align: center;
   width: 100%;
 }
@@ -83,12 +75,10 @@ table {
   overflow: hidden;
   text-overflow: ellipsis;
   border-right: 1px solid rgba(177, 171, 171, 0.6);
-  /* 边框透明 */
   display: flex;
   flex-direction: column;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.6);
-  /* 设置透明背景色 */
   box-sizing: border-box;
   font-size: 14px;
 }

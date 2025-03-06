@@ -112,7 +112,8 @@
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   padding: 5px;
-  overflow: hidden;
+  max-height: 400px; /* 限制容器高度，确保内容区域可以滚动 */
+  overflow: hidden; /* 隐藏外部溢出 */
 }
 
 /* 表格样式 */
@@ -133,10 +134,19 @@ table {
   text-align: center;
   width: 100%;
   font-size: 14px;
+  position: sticky;
+  top: 0; /* 表头固定在顶部 */
+}
+
+/* 表格内容区域 */
+.table-body {
+  overflow-y: auto; /* 内容区域可滚动 */
+  flex-grow: 1; /* 填充剩余空间 */
 }
 
 /* 表格行 */
 .table-row {
+  padding-top: 0; 
   display: flex;
   justify-content: space-between;
   padding: 10px;

@@ -58,12 +58,12 @@
           <block wx:else>
 
             <!-- 随便吃点按钮 -->
-            <view class="button-container" bindtap="onRandomMeal" data-meal="breakfast">
+            <view class="card-list-button-container" bindtap="onRandomMeal" data-meal="breakfast">
               <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
-            <view class="button-container" bindtap="onCustomMeal" data-meal="breakfast">
+            <view class="card-list-button-container" bindtap="onCustomMeal" data-meal="breakfast">
               <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>
@@ -99,12 +99,12 @@
           <block wx:else>
 
             <!-- 随便吃点按钮 -->
-            <view class="button-container" bindtap="onRandomMeal" data-meal="lunch">
+            <view class="card-list-button-container" bindtap="onRandomMeal" data-meal="lunch">
               <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
-            <view class="button-container" bindtap="onCustomMeal" data-meal="lunch">
+            <view class="card-list-button-container" bindtap="onCustomMeal" data-meal="lunch">
               <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>
@@ -140,12 +140,12 @@
           <block wx:else>
 
             <!-- 随便吃点按钮 -->
-            <view class="button-container" bindtap="onRandomMeal" data-meal="dinner">
+            <view class="card-list-button-container" bindtap="onRandomMeal" data-meal="dinner">
               <image class="button-background" src="/icons/sbcd_button.jpg" />
             </view>
 
             <!-- 私人订制按钮 -->
-            <view class="button-container" bindtap="onCustomMeal" data-meal="dinner">
+            <view class="card-list-button-container" bindtap="onCustomMeal" data-meal="dinner">
               <image class="button-background" src="/icons/srdz_button.jpg" />
             </view>
           </block>

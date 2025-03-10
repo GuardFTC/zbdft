@@ -213,3 +213,37 @@
   color: #fff;
   float: right; /* 确保它靠右 */
 }
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.mask-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.mask-text {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.mask-button {
+  background-color: #F6E4CE;
+  color: rgb(83, 43, 43);
+  padding: 10px 20px;
+  border-radius: 5px;
+}

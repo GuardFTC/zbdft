@@ -6,7 +6,7 @@
 </view>
 
 <!-- 页面内容 -->
-<scroll-view class="scrollarea" scroll-y type="list">
+<scroll-view class="scrollarea" scroll-y="false" type="list">
   <view class="container">
 
     <!-- 背景图 -->
@@ -188,5 +188,14 @@
         </view>
       </view>
     </view>
+
+    <!-- 进入页面时的蒙版 -->
+    <view class="mask" wx:if="{{showMask}}">
+      <view class="mask-content">
+        <text class="mask-text">请至少录入一种主食~</text>
+        <button class="mask-button" bindtap="goToMyMenu">我滴菜单</button>
+      </view>
+    </view>
+
   </view>
 </scroll-view>

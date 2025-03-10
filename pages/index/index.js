@@ -28,7 +28,10 @@ Page({
     navigationBarHeight: 44, // 导航栏默认高度（单位：px）
 
     //个人信息相关
-    openId: ""
+    openId: "",
+
+    //蒙版相关数据
+    showMask: false,
   },
 
   //---------------------------钩子函数相关--------------------------//
@@ -37,24 +40,38 @@ Page({
 
     //1.获取openId
     wx.cloud.callFunction({
-        name: 'getOpenId',
-        success: function (res) {
-          const openId = res.result.openid;
-          wx.setStorageSync('openId', openId);
-        },
-        fail: console.error
-      }),
+      name: 'getOpenId',
+      success: function (res) {
+        const openId = res.result.openid;
+        wx.setStorageSync('openId', openId);
+      },
+      fail: console.error
+    })
 
-      //2.初始化食物相关数组
-      this.initFoods();
-
-    //3.更新当前页数据
-    this.updatePageData();
-
-    //4.获取导航栏高度
+    //2.获取导航栏高度
     const windowInfo = wx.getWindowInfo();
     this.setData({
       statusBarHeight: windowInfo.statusBarHeight,
+    });
+
+    //3.初始化食物相关数组
+    this.initFoods().then(() => {
+      if (this.isMainFoodsEmpty()) {
+
+        //4.展示蒙版
+        this.setData({
+          showMask: true
+        });
+      } else {
+
+        //4.取消蒙版展示
+        this.setData({
+          showMask: false
+        });
+
+        //5.更新当前页数据
+        this.updatePageData();
+      }
     });
   },
 
@@ -62,7 +79,24 @@ Page({
   onShow() {
 
     //1.初始化食物相关数组
-    this.initFoods();
+    this.initFoods().then(() => {
+      if (this.isMainFoodsEmpty()) {
+
+        //2.展示蒙版
+        this.setData({
+          showMask: true
+        });
+      } else {
+
+        //2.取消蒙版展示
+        this.setData({
+          showMask: false
+        });
+
+        //3.更新当前页数据
+        this.updatePageData();
+      }
+    });
   },
 
   //初始化食物相关数组
@@ -70,14 +104,19 @@ Page({
 
     //1.数据库按照类别聚合name
     const res = await this.getTypes()
-
+    
     //2.设置食物相关数组数据
     this.setData({
-      mainFoods: res['主食'],
-      meatFoods: res['肉菜'],
-      veggieFoods: res['素菜'],
-      fruits: res['水果']
+      mainFoods: res['主食'] || [],
+      meatFoods: res['肉菜'] || [],
+      veggieFoods: res['素菜'] || [],
+      fruits: res['水果'] || []
     });
+  },
+
+  //判定是否已录入主食
+  isMainFoodsEmpty: function () {
+    return this.data.mainFoods.length == 0
   },
 
   //---------------------------页面函数相关--------------------------//
@@ -85,13 +124,13 @@ Page({
   async updatePageData() {
     try {
 
-      // 1.获取今日日期 yyyy-MM-dd
+      //1.获取今日日期 yyyy-MM-dd
       const today = this.getCurrentDate();
 
-      // 2.查询今日菜单
-      const todayMenu = await this.getTodayMenu(today);
+      //2.查询今日菜单
+      const todayMenu = await this.getTodayMenu(today)
 
-      // 3.检查 todayMenu.data 是否存在且不为空
+      //3.检查 todayMenu.data 是否存在且不为空
       if (!todayMenu.data || todayMenu.data.length === 0) {
 
         //4.如果 todayMenu.data 为空，初始化 pageData
@@ -101,8 +140,8 @@ Page({
           }
         });
 
-        //5.模拟数据库中插入数据
-        await this.addTodayMenu(today); // 假设 addTodayMenu 是异步方法
+        //5.数据库中插入数据
+        this.addTodayMenu(today)
       } else {
 
         //4.如果 todayMenu.data 不为空，更新 pageData
@@ -139,18 +178,28 @@ Page({
     //1.获取餐食类型
     const mealType = event.currentTarget.dataset.meal;
 
-    //2.构造随机餐食
+    //2.校验主食数组是否为空
+    if (this.data.mainFoods.length === 0) {
+      wx.showToast({
+        title: '请至少录入一种主食~',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
+    //3.构造随机餐食
     const randomMeal = {
       main: this.getRandomItem(this.data.mainFoods),
-      meat: this.getRandomItem(this.data.meatFoods),
-      veg: this.getRandomItem(this.data.veggieFoods),
-      fruit: this.getRandomItem(this.data.fruits)
+      meat: this.data.meatFoods.length === 0 ? "" : this.getRandomItem(this.data.meatFoods),
+      veg: this.data.veggieFoods.length === 0 ? "" : this.getRandomItem(this.data.veggieFoods),
+      fruit: this.data.fruits.length === 0 ? "" : this.getRandomItem(this.data.fruits)
     };
 
-    //3.数据库更新数据
+    //4.数据库更新数据
     await this.updateTodayMenu(this.getCurrentDate(), mealType, randomMeal)
 
-    //4.更新当前页数据
+    //5.更新当前页数据
     this.updatePageData()
   },
 
@@ -160,7 +209,17 @@ Page({
     //1.获取餐食类型
     const mealType = event.currentTarget.dataset.meal;
 
-    //2.显示模态框
+    //2.校验主食数组是否为空
+    if (this.data.mainFoods.length === 0) {
+      wx.showToast({
+        title: '请至少录入一种主食~',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
+    //3.显示模态框
     this.setData({
       showModal: true,
       main: "",
@@ -327,8 +386,8 @@ Page({
 
       //3.聚合返回
       return res.list.reduce((result, item) => {
-        if (item._id.openid === openid) { 
-          result[item._id.type] = item.names; 
+        if (item._id.openid === openid) {
+          result[item._id.type] = item.names;
         }
         return result;
       }, {});
